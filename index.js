@@ -6,12 +6,16 @@ app.use(express.static(__dirname + '/public'));
 
 // bodyParser
 var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.post('/post', function(req, res) {
-  for (key in req.body) {
-    console.log(key, '=', req.body[key]);
-  }
-  res.end();
+  console.log("req.body :");
+  console.log(req.body);
+  console.log("first_name : " + req.body.first_name);
+  var timestamp = new Date().getTime();
+  res.json({
+    message:"OK! timestamp:" + timestamp // OKに加えてタイムスタンプを送信
+  });
 });
 // app.listen(8080);
 app.listen(process.env.PORT || 8080);
