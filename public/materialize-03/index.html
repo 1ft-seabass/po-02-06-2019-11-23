@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- https://materializecss.com/text-inputs.html -->
+
+        <h2>Form</h2>
+
+        <div class="row">
+            <form class="col s12" id="form">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+                        <label for="first_name">First Name</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <button class="btn waves-effect waves-light blue darken-4" type="button" id="send">Send
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input placeholder="Placeholder" id="result" type="text" class="validate">
+                        <label for="result">Result</label>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+
+    </div>
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+    <script>
+        $(function(){
+            $('#form #send').click(function(event) {
+                // jQueryでPOSTを送る
+                $.ajax({
+                    type:"post",
+                    url: "/post",
+                    cache: false,
+                    timeout: 10000,
+                    dataType: "json",
+                    data:{
+                        first_name:$('#form #first_name').val()
+                    }
+                })
+                    .then(
+                        // 1つめは通信成功時のコールバック
+                        function (data) {
+                            console.log(data);
+                            $('#form #result').val(data.message)
+                            alert("読み込み完了！");
+                        },
+                        // 2つめは通信失敗時のコールバック
+                        function () {
+                            alert("読み込み失敗");
+                        });
+            });
+        });
+
+    </script>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>
